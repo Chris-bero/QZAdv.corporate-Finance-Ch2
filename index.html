@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Capital Structure - Premium Academic Quizzes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F4F7F6; --surface: #FFFFFF; --primary: #0F172A; --secondary: #334155;
+            --accent: #C5A059; --accent-light: rgba(197, 160, 89, 0.1); --text-main: #1E293B;
+            --text-muted: #64748B; --success: #059669; --success-bg: rgba(5, 150, 105, 0.1);
+            --error: #DC2626; --error-bg: rgba(220, 38, 38, 0.1); --border: #E2E8F0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.15); --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; font-family: 'Inter', sans-serif; transition: var(--transition); }
+        body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
+
+        header { background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%); color: white; padding: 2.5rem 0; position: relative; overflow: hidden; box-shadow: var(--shadow-lg); }
+        header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(197, 160, 89, 0.15) 0%, transparent 70%); border-radius: 50%; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+        .brand { display: flex; flex-direction: column; text-align: center; }
+        .brand h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
+        body[dir="rtl"] .brand h1 { font-family: 'Cairo', sans-serif; font-size: 1.8rem; }
+        .brand span { color: var(--accent); font-size: 0.9rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+        .fab-translate { position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%); color: var(--accent); border: 2px solid var(--accent); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 0 15px rgba(197, 160, 89, 0.2); transition: var(--transition); overflow: hidden; }
+        [dir="rtl"] .fab-translate { right: auto; left: 30px; }
+        .fab-translate:hover { transform: scale(1.1); box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 25px rgba(197, 160, 89, 0.4); background: var(--accent); color: var(--primary); }
+        .fab-icon { font-size: 1.5rem; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .fab-translate.animate .fab-icon { transform: rotate(360deg) scale(1.2); }
+        .fab-tooltip { position: absolute; right: 75px; background: var(--primary); color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; transform: translateX(10px); }
+        [dir="rtl"] .fab-tooltip { right: auto; left: 75px; transform: translateX(-10px); }
+        .fab-translate:hover .fab-tooltip { opacity: 1; transform: translateX(0); }
+
+        .tabs-wrapper { margin-top: -30px; margin-bottom: 40px; position: relative; z-index: 2; }
+        .tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .tab-btn { padding: 14px 40px; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: var(--transition); box-shadow: var(--shadow-sm); }
+        .tab-btn:hover { color: var(--primary); border-color: var(--accent); }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+
+        .quiz-container { background: var(--surface); padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow-md); margin-bottom: 60px; border: 1px solid var(--border); animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .quiz-title { text-align: center; color: var(--primary); margin-bottom: 40px; font-family: 'Playfair Display', serif; font-size: 1.6rem; position: relative; padding-bottom: 15px; }
+        body[dir="rtl"] .quiz-title { font-family: 'Cairo', sans-serif; }
+        .quiz-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--accent); border-radius: 2px; }
+
+        .question-block { margin-bottom: 32px; padding: 28px; background: #FAFCFC; border-radius: 12px; border: 1px solid var(--border); transition: var(--transition); }
+        .question-block:hover { border-color: #CBD5E1; box-shadow: var(--shadow-sm); }
+        .question-number { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; font-size: 0.85rem; font-weight: bold; margin-right: 12px; flex-shrink: 0; }
+        body[dir="rtl"] .question-number { margin-right: 0; margin-left: 12px; }
+        .question-text { font-weight: 600; font-size: 1.05rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; }
+
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option-card { display: flex; align-items: center; padding: 16px 20px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: var(--transition); }
+        .option-card:hover { border-color: var(--accent); background: var(--accent-light); transform: translateX(4px); }
+        body[dir="rtl"] .option-card:hover { transform: translateX(-4px); }
+        .option-card.selected { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 4px 12px rgba(197, 160, 89, 0.15); }
+        .option-card input[type="radio"] { display: none; }
+        .custom-radio { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; transition: var(--transition); flex-shrink: 0; }
+        body[dir="rtl"] .custom-radio { margin-right: 0; margin-left: 15px; }
+        .option-card.selected .custom-radio { border-color: var(--accent); background: var(--accent); }
+        .option-card.selected .custom-radio::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; }
+        .option-text { font-size: 0.95rem; color: var(--text-main); font-weight: 500; }
+
+        .option-card.correct { border-color: var(--success) !important; background: var(--success-bg) !important; }
+        .option-card.correct .custom-radio { border-color: var(--success); background: var(--success); }
+        .option-card.incorrect { border-color: var(--error) !important; background: var(--error-bg) !important; }
+        .option-card.incorrect .custom-radio { border-color: var(--error); background: var(--error); }
+
+        .explanation-box { margin-top: 20px; padding: 18px 20px; background: #FFFBF0; border-left: 4px solid var(--accent); border-radius: 8px; display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .explanation-box.show { display: block; opacity: 1; transform: translateY(0); }
+        [dir="rtl"] .explanation-box { border-left: none; border-right: 4px solid var(--accent); }
+        .explanation-header { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); margin-bottom: 8px; font-size: 0.95rem; }
+        .explanation-icon { color: var(--accent); font-size: 1.1rem; }
+        .explanation-text { color: var(--secondary); font-size: 0.92rem; line-height: 1.7; }
+
+        .submit-btn { display: block; width: 100%; padding: 18px; background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 30px; transition: var(--transition); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(15, 23, 42, 0.3); }
+
+        .result-box { margin-top: 30px; padding: 30px; border-radius: 12px; text-align: center; display: none; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .result-box.correct { background: linear-gradient(135deg, rgba(5, 150, 105, 0.05), rgba(5, 150, 105, 0.1)); border: 1px solid var(--success); }
+        .result-box.incorrect { background: linear-gradient(135deg, rgba(220, 38, 38, 0.05), rgba(220, 38, 38, 0.1)); border: 1px solid var(--error); }
+        .score-display { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .result-box.correct .score-display { color: var(--success); }
+        .result-box.incorrect .score-display { color: var(--error); }
+        .result-msg { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
+
+        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px; }
+
+        @media (max-width: 768px) {
+            .brand h1 { font-size: 1.5rem; } .quiz-container { padding: 24px; }
+            .question-block { padding: 20px; } .fab-translate { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+            [dir="rtl"] .fab-translate { left: 20px; right: auto; }
+        }
+    </style>
+</head>
+
+<script>
+(function () {
+  var TRACK_URL = "https://script.google.com/macros/s/AKfycbzWhqHm8sl_fogZTB_E_WEgBwJjke3qZ574Yj8f8gI9_KYUelzA4-EI2azlvFE96YlC/exec";
+  var MAX_SCORE = 10;   // ← العظمى الافتراضية عندما لا تذكر النتيجةُ علتها
+  var QUIZZES = [
+    // { selector: "#q1-result", label: "Ch1 Quiz 1" },
+    // { selector: "#q2-result", label: "Ch1 Quiz 2" },
+  ];
+
+  var vid;
+  try {
+    var pm = location.search.match(/[?&]ebra_vid=([^&]+)/);
+    if (pm) {
+      vid = decodeURIComponent(pm[1]);
+      localStorage.setItem("ebra_vid", vid);
+    } else {
+      vid = localStorage.getItem("ebra_vid");
+      if (!vid) {
+        vid = "v-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 9);
+        localStorage.setItem("ebra_vid", vid);
+      }
+    }
+  } catch (e) { vid = "v-na"; }
+
+  function post(score, max, label) {
+    fetch(TRACK_URL, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        type: "score",
+        visitorId: vid,
+        quiz: label || "Quiz",
+        score: score,
+        max: max,
+        percent: Math.round((score / max) * 100),
+        page: location.origin + location.pathname
+      })
+    }).catch(function () {});
+  }
+
+  function parseScore(txt) {
+    txt = txt || "";
+    var m = txt.match(/(\d+(?:[.,]\d+)?)\s*(?:\/|من|out of|-)\s*(\d+)/) || txt.match(/(\d+(?:[.,]\d+)?)/);
+    if (!m) return null;
+    return {
+      score: parseFloat(m[1].replace(",", ".")),
+      max: m[2] ? parseFloat(m[2]) : null
+    };
+  }
+
+  /* 3) اليدوي */
+  var lastManual = {};
+  window.EBRA = window.EBRA || {};
+  window.EBRA.trackScore = function (score, max, label) {
+    var k = label + "|" + score + "/" + max;
+    var now = Date.now();
+    if (lastManual[k] && now - lastManual[k] < 3000) return;
+    lastManual[k] = now;
+    post(Number(score), Number(max) || MAX_SCORE, label);
+  };
+
+  /* 1) + 2) المسح التلقائي */
+  var lastSel = {};
+  function scan() {
+    for (var i = 0; i < QUIZZES.length; i++) {
+      var qz = QUIZZES[i];
+      var el = document.querySelector(qz.selector);
+      if (!el) continue;
+      var p = parseScore(el.textContent);
+      if (!p) continue;
+      if (lastSel[qz.selector] === p.score) continue;   // إعادة المحاولة بنفس الدرجة لا تُكرر
+      lastSel[qz.selector] = p.score;
+      post(p.score, p.max || MAX_SCORE, qz.label);
+    }
+    var els = document.querySelectorAll("[data-ebra-quiz]");
+    for (var j = 0; j < els.length; j++) {
+      var el2 = els[j];
+      if (el2.getAttribute("data-ebra-done")) continue;
+      var p2 = parseScore(el2.textContent);
+      if (!p2) continue;
+      el2.setAttribute("data-ebra-done", "1");
+      post(p2.score, p2.max || MAX_SCORE, el2.getAttribute("data-ebra-quiz"));
+    }
+  }
+
+  var timer = null;
+  function queueScan() {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(scan, 400);
+  }
+  try {
+    var mo = new MutationObserver(queueScan);
+    mo.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  } catch (e) {
+    setInterval(queueScan, 1500);
+  }
+  document.addEventListener("DOMContentLoaded", queueScan);
+  window.addEventListener("load", queueScan);
+})();
+</script>
+
+<!-- 📡 جزء تتبع الزيارات -->
+<script>
+(function () {
+  var TRACK_URL = "https://script.google.com/macros/s/AKfycbzWhqHm8sl_fogZTB_E_WEgBwJjke3qZ574Yj8f8gI9_KYUelzA4-EI2azlvFE96YlC/exec";
+  var vid;
+  try {
+    var pm = location.search.match(/[?&]ebra_vid=([^&]+)/);
+    if (pm) {
+      vid = decodeURIComponent(pm[1]);
+      localStorage.setItem("ebra_vid", vid);
+    } else {
+      vid = localStorage.getItem("ebra_vid");
+      if (!vid) {
+        vid = "v-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 9);
+        localStorage.setItem("ebra_vid", vid);
+      }
+    }
+  } catch (e) { vid = "v-na"; }
+  fetch(TRACK_URL, {
+    method: "POST",
+    mode: "cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({
+      visitorId: vid,
+      page: location.origin + location.pathname,
+      referrer: document.referrer || "Direct",
+      language: navigator.language || "",
+      screen: window.screen ? (screen.width + "x" + screen.height) : "",
+      ua: navigator.userAgent
+    })
+  }).catch(function () {});
+})();
+</script>
+
+
+<body>
+
+<header>
+    <div class="container">
+        <div class="brand">
+            <h1 id="main-title">Corporate Capital Structure</h1>
+            <span id="sub-title">Leverage & Financing Decisions</span>
+        </div>
+    </div>
+</header>
+
+<button class="fab-translate" id="fab-translate" onclick="toggleLanguage(this)">
+    <span class="fab-icon">🌐</span>
+    <span class="fab-tooltip" id="fab-tooltip">Translate to العربية</span>
+</button>
+
+<div class="container">
+    <div class="tabs-wrapper">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchQuiz(0)" id="tab-0">Quiz 1</button>
+            <button class="tab-btn" onclick="switchQuiz(1)" id="tab-1">Quiz 2</button>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <h2 class="quiz-title" id="quiz-title"></h2>
+        <form id="quiz-form"></form>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+        <div class="result-box" id="result-box">
+            <div class="score-display" id="score-display"></div>
+            <div class="result-msg" id="result-msg"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p id="footer-text">Based on "Leverage and Capital Structure" - Dr. Shaimaa Elgamal</p>
+</footer>
+
+<script>
+    let currentLang = 'en';
+    let currentQuizIndex = 0;
+    const answers = {};   /* يحفظ الاختيارات عند تبديل اللغة أو التبويب */
+    const graded = {};    /* يتذكر أي اختبار تم تصحيحه */
+
+    const translations = {
+        en: {
+            mainTitle: "Corporate Capital Structure", subTitle: "Leverage & Financing Decisions",
+            fabTooltip: "Translate to العربية", submitBtn: "Submit Answers",
+            footer: "Based on \"Leverage and Capital Structure\" - ",
+            resultCorrect: "Outstanding! You have mastered this section.",
+            resultIncorrect: "Good effort. Review the explanations below and try again.",
+            explainTitle: "Explanation"
+        },
+        ar: {
+            mainTitle: "هيكل رأس المال للشركات", subTitle: "الرافعة المالية وقرارات التمويل",
+            fabTooltip: "Translate to English", submitBtn: "إرسال الإجابات",
+            footer: "بناءً على مادة \"الرافعة المالية وهيكل رأس المال\" - د. شيماء الجمال",
+            resultCorrect: "أداء ممتاز! لقد أتقنت هذا القسم.",
+            resultIncorrect: "جهد جيد. راجع الشرح أدناه وحاول مرة أخرى.",
+            explainTitle: "الشرح"
+        }
+    };
+
+    const quizzes = [
+        {
+            title: { en: "Quiz 1: M&M Propositions & Trade-Off Theory", ar: "الاختبار الأول: نظريات مودigliani-ميلر ونظرية المفاضلة" },
+            questions: [
+                { q: { en: "According to M&M Proposition I (No Taxes), the value of a levered firm (VL) is:", ar: "وفقاً لنظرية مودigliani-ميلر الأولى (بدون ضرائب)، قيمة الشركة ذات الرافعة المالية (VL) هي:" }, options: [ { en: "Greater than the value of an unlevered firm (VU).", ar: "أكبر من قيمة الشركة بدون رافعة مالية (VU)." }, { en: "Equal to the value of an unlevered firm (VU).", ar: "تساوي قيمة الشركة بدون رافعة مالية (VU)." }, { en: "Less than the value of an unlevered firm (VU).", ar: "أقل من قيمة الشركة بدون رافعة مالية (VU)." }, { en: "Dependent on the corporate tax rate.", ar: "تعتمد على معدل ضريبة الشركات." } ], answer: 1, explanation: { en: "M&M Proposition I (No Taxes) states that VL = VU. Capital structure does not affect firm value in a perfect world without taxes.", ar: "تنص نظرية مودigliani-ميلر الأولى (بدون ضرائب) على أن VL = VU. هيكل رأس المال لا يؤثر على قيمة الشركة في عالم مثالي بدون ضرائب." } },
+                { q: { en: "The formula for the value of an unlevered firm (VU) using the Zero Growth Model is:", ar: "صيغة قيمة الشركة بدون رافعة مالية (VU) باستخدام نموذج النمو الصفري هي:" }, options: [ { en: "VU = EBIT × Keu", ar: "VU = EBIT × Keu" }, { en: "VU = EBIT / Keu", ar: "VU = EBIT / Keu" }, { en: "VU = Net Income / Keu", ar: "VU = Net Income / Keu" }, { en: "VU = EBIT / WACC", ar: "VU = EBIT / WACC" } ], answer: 1, explanation: { en: "The value of an unlevered firm is the present value of its perpetual EBIT, discounted at the unlevered cost of equity (Keu). VU = EBIT / Keu.", ar: "قيمة الشركة بدون رافعة مالية هي القيمة الحالية لـ EBIT الأبدي، مخصوماً بمعدل تكلفة حقوق الملكية بدون رافعة (Keu). VU = EBIT / Keu." } },
+                { q: { en: "In the M&M No Taxes example, if EBIT = $1,000,000 and Keu = 10%, what is VU?", ar: "في مثال مودigliani-ميلر بدون ضرائب، إذا كان EBIT = 1,000,000 دولار و Keu = 10%، فما هي VU؟" }, options: [ { en: "$1,000,000", ar: "1,000,000 دولار" }, { en: "$10,000,000", ar: "10,000,000 دولار" }, { en: "$100,000", ar: "100,000 دولار" }, { en: "$5,000,000", ar: "5,000,000 دولار" } ], answer: 1, explanation: { en: "Calculation: VU = EBIT / Keu = 1,000,000 / 0.10 = $10,000,000.", ar: "الحساب: VU = EBIT / Keu = 1,000,000 / 0.10 = 10,000,000 دولار." } },
+                { q: { en: "If Firm L has VU = $10,000,000 and Debt (D) = $4,000,000, what is the Value of Equity (E)?", ar: "إذا كانت الشركة ل لديها VU = 10,000,000 دولار والديون (D) = 4,000,000 دولار، فما هي قيمة حقوق الملكية (E)؟" }, options: [ { en: "$14,000,000", ar: "14,000,000 دولار" }, { en: "$6,000,000", ar: "6,000,000 دولار" }, { en: "$10,000,000", ar: "10,000,000 دولار" }, { en: "$4,000,000", ar: "4,000,000 دولار" } ], answer: 1, explanation: { en: "Since VL = VU = $10,000,000, and VL = D + E, then E = VL - D = 10,000,000 - 4,000,000 = $6,000,000.", ar: "بما أن VL = VU = 10,000,000 دولار، و VL = D + E، فإن E = VL - D = 10,000,000 - 4,000,000 = 6,000,000 دولار." } },
+                { q: { en: "How is the Interest Expense (I) calculated for a levered firm?", ar: "كيف يتم حساب مصروفات الفائدة (I) للشركة ذات الرافعة المالية؟" }, options: [ { en: "I = EBIT × Kd", ar: "I = EBIT × Kd" }, { en: "I = D × Kd", ar: "I = D × Kd" }, { en: "I = E × Ke", ar: "I = E × Ke" }, { en: "I = D × Keu", ar: "I = D × Keu" } ], answer: 1, explanation: { en: "Interest expense is the debt amount multiplied by the cost of debt (Kd). I = D × Kd.", ar: "مصروفات الفائدة هو مبلغ الدين مضروباً في تكلفة الدين (Kd). I = D × Kd." } },
+                { q: { en: "Equity earnings for a levered firm are calculated as:", ar: "أرباح حقوق الملكية للشركة ذات الرافعة المالية تُحسب على أنها:" }, options: [ { en: "EBIT + Interest", ar: "EBIT + Interest" }, { en: "EBIT - Interest", ar: "EBIT - Interest" }, { en: "Net Income - Taxes", ar: "Net Income - Taxes" }, { en: "EBIT × (1 - Tax Rate)", ar: "EBIT × (1 - Tax Rate)" } ], answer: 1, explanation: { en: "Equity earnings (Earnings available to shareholders) = EBIT - Interest Expense.", ar: "أرباح حقوق الملكية (الأرباح المتاحة للمساهمين) = EBIT - مصروفات الفائدة." } },
+                { q: { en: "According to M&M Proposition II (No Taxes), the cost of equity (Ke) is:", ar: "وفقاً لنظرية مودigliani-ميلر الثانية (بدون ضرائب)، تكلفة حقوق الملكية (Ke) هي:" }, options: [ { en: "Constant regardless of leverage.", ar: "ثابتة بغض النظر عن الرافعة المالية." }, { en: "Decreases as leverage increases.", ar: "تنخفض مع زيادة الرافعة المالية." }, { en: "Increases with leverage because shareholders demand higher return for financial risk.", ar: "تزداد مع الرافعة المالية لأن المساهمين يطالبون بعائد أعلى مقابل المخاطر المالية." }, { en: "Equal to the cost of debt (Kd).", ar: "تساوي تكلفة الدين (Kd)." } ], answer: 2, explanation: { en: "M&M Prop II (No Taxes) states Ke = Keu + (Keu - Kd) × (D/E). As debt increases, financial risk increases, so Ke increases.", ar: "تنص نظرية مودigliani-ميلر الثانية (بدون ضرائب) على أن Ke = Keu + (Keu - Kd) × (D/E). مع زيادة الدين، تزداد المخاطر المالية، لذا تزداد Ke." } },
+                { q: { en: "In a perfect world with no taxes, what happens to the WACC as a firm increases its debt ratio?", ar: "في عالم مثالي بدون ضرائب، ماذا يحدث لـ WACC مع زيادة الشركة لنسبة ديونها؟" }, options: [ { en: "WACC decreases.", ar: "WACC ينخفض." }, { en: "WACC increases.", ar: "WACC يزداد." }, { en: "WACC remains constant.", ar: "WACC يبقى ثابتاً." }, { en: "WACC becomes zero.", ar: "WACC يصبح صفراً." } ], answer: 2, explanation: { en: "Under M&M No Taxes, the benefit of cheap debt is exactly offset by the increased cost of equity, leaving WACC constant.", ar: "في ظل نظرية مودigliani-ميلر بدون ضرائب، يتم تعويض فائدة الدين الرخيص تماماً بواسطة الزيادة في تكلفة حقوق الملكية، مما يبقي WACC ثابتاً." } },
+                { q: { en: "M&M Proposition I (With Taxes) introduces the concept of:", ar: "تقدم نظرية مودigliani-ميلر الأولى (مع الضرائب) مفهوم:" }, options: [ { en: "Financial distress costs.", ar: "تكاليف الضيق المالي." }, { en: "The interest tax shield.", ar: "الدرع الضريبي للفائدة." }, { en: "Agency costs.", ar: "تكاليف الوكالة." }, { en: "Information asymmetry.", ar: "عدم تناسق المعلومات." } ], answer: 1, explanation: { en: "With taxes, debt becomes valuable because interest payments are tax-deductible, creating a tax shield (Tc × D).", ar: "مع الضرائب، يصبح الدين ذا قيمة لأن مدفوعات الفائدة قابلة للخصم الضريبي، مما يخلق درعاً ضريبياً (Tc × D)." } },
+                { q: { en: "The formula for M&M Proposition I (With Taxes) is:", ar: "صيغة نظرية مودigliani-ميلر الأولى (مع الضرائب) هي:" }, options: [ { en: "VL = VU", ar: "VL = VU" }, { en: "VL = VU + (Tc × D)", ar: "VL = VU + (Tc × D)" }, { en: "VL = VU - (Tc × D)", ar: "VL = VU - (Tc × D)" }, { en: "VL = VU + PV(Distress Costs)", ar: "VL = VU + PV(Distress Costs)" } ], answer: 1, explanation: { en: "The value of a levered firm equals the value of an unlevered firm plus the present value of the interest tax shield (Tc × D).", ar: "قيمة الشركة ذات الرافعة المالية تساوي قيمة الشركة بدون رافعة مالية زائد القيمة الحالية للدرع الضريبي للفائدة (Tc × D)." } },
+                { q: { en: "If VU = $10,000,000, Tax Rate (Tc) = 25%, and Debt (D) = $3,000,000, what is VL?", ar: "إذا كانت VU = 10,000,000 دولار، ومعدل الضريبة (Tc) = 25%، والدين (D) = 3,000,000 دولار، فما هي VL؟" }, options: [ { en: "$10,000,000", ar: "10,000,000 دولار" }, { en: "$10,750,000", ar: "10,750,000 دولار" }, { en: "$13,000,000", ar: "13,000,000 دولار" }, { en: "$9,250,000", ar: "9,250,000 دولار" } ], answer: 1, explanation: { en: "Calculation: VL = VU + (Tc × D) = 10,000,000 + (0.25 × 3,000,000) = 10,000,000 + 750,000 = $10,750,000.", ar: "الحساب: VL = VU + (Tc × D) = 10,000,000 + (0.25 × 3,000,000) = 10,000,000 + 750,000 = 10,750,000 دولار." } },
+                { q: { en: "The formula for M&M Proposition II (With Taxes) for the cost of equity is:", ar: "صيغة نظرية مودigliani-ميلر الثانية (مع الضرائب) لتكلفة حقوق الملكية هي:" }, options: [ { en: "Ke = Keu + (Keu - Kd) × (D/E)", ar: "Ke = Keu + (Keu - Kd) × (D/E)" }, { en: "Ke = Keu + (1 - Tc) × (Keu - Kd) × (D/E)", ar: "Ke = Keu + (1 - Tc) × (Keu - Kd) × (D/E)" }, { en: "Ke = Keu + Tc × (Keu - Kd) × (D/E)", ar: "Ke = Keu + Tc × (Keu - Kd) × (D/E)" }, { en: "Ke = WACC + (Kd × D/E)", ar: "Ke = WACC + (Kd × D/E)" } ], answer: 1, explanation: { en: "With taxes, the increase in Ke is dampened by the tax shield. The formula includes the (1 - Tc) multiplier.", ar: "مع الضرائب، يتم تخفيف الزيادة في Ke بواسطة الدرع الضريبي. تتضمن الصيغة المضاعف (1 - Tc)." } },
+                { q: { en: "How does the WACC behave as debt increases under M&M With Taxes?", ar: "كيف يتصرف WACC مع زيادة الدين في ظل نظرية مودigliani-ميلر مع الضرائب؟" }, options: [ { en: "WACC remains constant.", ar: "WACC يبقى ثابتاً." }, { en: "WACC increases.", ar: "WACC يزداد." }, { en: "WACC declines because the tax shield lowers the effective cost of debt.", ar: "WACC ينخفض لأن الدرع الضريبي يخفض التكلفة الفعالة للدين." }, { en: "WACC becomes equal to Keu.", ar: "WACC يصبح مساوياً لـ Keu." } ], answer: 2, explanation: { en: "The tax deductibility of interest makes debt cheaper on an after-tax basis, causing the overall WACC to decline as debt increases.", ar: "قابلية خصم الفائدة ضريبياً تجعل الدين أرخص على أساس بعد الضريبي، مما يسبب انخفاض WACC الإجمالي مع زيادة الدين." } },
+                { q: { en: "The Trade-Off Theory formula for the value of a levered firm is:", ar: "صيغة نظرية المفاضلة لقيمة الشركة ذات الرافعة المالية هي:" }, options: [ { en: "VL = VU + (Tc × D)", ar: "VL = VU + (Tc × D)" }, { en: "VL = VU + (Tc × D) - PV(Financial Distress Costs)", ar: "VL = VU + (Tc × D) - PV(Financial Distress Costs)" }, { en: "VL = VU - PV(Financial Distress Costs)", ar: "VL = VU - PV(Financial Distress Costs)" }, { en: "VL = VU + Agency Costs", ar: "VL = VU + Agency Costs" } ], answer: 1, explanation: { en: "Trade-off theory balances the tax benefits of debt against the costs of financial distress (bankruptcy risk).", ar: "توازن نظرية المفاضلة بين الفوائد الضريبية للدين وتكاليف الضيق المالي (مخاطر الإفلاس)." } },
+                { q: { en: "According to the Trade-Off Theory, why shouldn't a firm be financed with 100% debt?", ar: "وفقاً لنظرية المفاضلة، لماذا لا يجب أن يتم تمويل الشركة بنسبة 100% ديون؟" }, options: [ { en: "Because interest is not tax-deductible.", ar: "لأن الفائدة ليست قابلة للخصم الضريبي." }, { en: "Because excessive leverage increases the probability and costs of bankruptcy.", ar: "لأن الرافعة المالية المفرطة تزيد من احتمالية وتكاليف الإفلاس." }, { en: "Because equity is cheaper than debt.", ar: "لأن حقوق الملكية أرخص من الدين." }, { en: "Because the government prohibits it.", ar: "لأن الحكومة تحظر ذلك." } ], answer: 1, explanation: { en: "While debt provides a tax shield, too much debt increases financial distress costs, which eventually outweigh the tax benefits.", ar: "على الرغم من أن الدين يوفر درعاً ضريبياً، إلا أن الكثير من الدين يزيد من تكاليف الضيق المالي، والتي تفوق في النهاية الفوائد الضريبية." } },
+                { q: { en: "In the Trade-Off example, if VU = $5,000,000, Tc = 30%, D = $1,000,000, and PV(Distress) = $150,000, what is VL?", ar: "في مثال نظرية المفاضلة، إذا كانت VU = 5,000,000 دولار، Tc = 30%، D = 1,000,000 دولار، و PV(Distress) = 150,000 دولار، فما هي VL؟" }, options: [ { en: "$5,300,000", ar: "5,300,000 دولار" }, { en: "$5,150,000", ar: "5,150,000 دولار" }, { en: "$5,000,000", ar: "5,000,000 دولار" }, { en: "$4,850,000", ar: "4,850,000 دولار" } ], answer: 1, explanation: { en: "Calculation: VL = VU + (Tc × D) - PV(Distress) = 5,000,000 + (0.30 × 1,000,000) - 150,000 = 5,300,000 - 150,000 = $5,150,000.", ar: "الحساب: VL = VU + (Tc × D) - PV(Distress) = 5,000,000 + (0.30 × 1,000,000) - 150,000 = 5,300,000 - 150,000 = 5,150,000 دولار." } },
+                { q: { en: "The Debt-to-Equity Ratio (D/E) is calculated as:", ar: "يُحسب نسبة الدين إلى حقوق الملكية (D/E) على أنها:" }, options: [ { en: "Total Debt / Total Assets", ar: "إجمالي الدين / إجمالي الأصول" }, { en: "Total Debt / Total Equity", ar: "إجمالي الدين / إجمالي حقوق الملكية" }, { en: "Total Equity / Total Debt", ar: "إجمالي حقوق الملكية / إجمالي الدين" }, { en: "Interest / Net Income", ar: "الفائدة / صافي الدخل" } ], answer: 1, explanation: { en: "The Debt-to-Equity ratio is a leverage ratio calculated by dividing Total Debt by Total Equity.", ar: "نسبة الدين إلى حقوق الملكية هي نسبة رافعة مالية تُحسب بقسمة إجمالي الدين على إجمالي حقوق الملكية." } },
+                { q: { en: "If a firm issues $3,000,000 in debt and its equity value becomes $7,750,000, what is the D/E ratio?", ar: "إذا أصدرت الشركة 3,000,000 دولار من الديون وأصبحت قيمة حقوق الملكية 7,750,000 دولار، فما هي نسبة D/E؟" }, options: [ { en: "0.3871", ar: "0.3871" }, { en: "0.2500", ar: "0.2500" }, { en: "2.5833", ar: "2.5833" }, { en: "0.4000", ar: "0.4000" } ], answer: 0, explanation: { en: "Calculation: D/E = 3,000,000 / 7,750,000 ≈ 0.3871.", ar: "الحساب: D/E = 3,000,000 / 7,750,000 ≈ 0.3871." } },
+                { q: { en: "In the WACC formula with taxes: WACC = (E/V)Ke + [(D/V)Kd(1 - Tc)], what does (1 - Tc) represent?", ar: "في صيغة WACC مع الضرائب: WACC = (E/V)Ke + [(D/V)Kd(1 - Tc)]، ماذا يمثل (1 - Tc)؟" }, options: [ { en: "The tax shield on equity.", ar: "الدرع الضريبي على حقوق الملكية." }, { en: "The after-tax cost of debt.", ar: "التكلفة بعد الضريبة للدين." }, { en: "The depreciation rate.", ar: "معدل الإهلاك." }, { en: "The dividend payout ratio.", ar: "نسبة توزيعات الأرباح." } ], answer: 1, explanation: { en: "Interest is tax-deductible, so the effective cost of debt to the firm is Kd × (1 - Tc).", ar: "الفائدة قابلة للخصم الضريبي، لذا فإن التكلفة الفعالة للدين للشركة هي Kd × (1 - Tc)." } },
+                { q: { en: "Which theory suggests that there is an optimal capital structure where the tax benefits of debt are perfectly balanced by distress costs?", ar: "أي نظرية تشير إلى وجود هيكل رأس مال مثالي حيث تتوازن الفوائد الضريبية للدين تماماً مع تكاليف الضيق؟" }, options: [ { en: "M&M Proposition I (No Taxes)", ar: "نظرية مودigliani-ميلر الأولى (بدون ضرائب)" }, { en: "M&M Proposition I (With Taxes)", ar: "نظرية مودigliani-ميلر الأولى (مع الضرائب)" }, { en: "Trade-Off Theory", ar: "نظرية المفاضلة" }, { en: "Pecking Order Theory", ar: "نظرية الترتيب التمويلي" } ], answer: 2, explanation: { en: "The Trade-Off Theory explicitly incorporates financial distress costs to find the optimal debt level that maximizes firm value.", ar: "تدمج نظرية المفاضلة صراحة تكاليف الضيق المالي للعثور على مستوى الدين الأمثل الذي يعظم قيمة الشركة." } }
+            ]
+        },
+        {
+            title: { en: "Quiz 2: EBIT-EPS, Share Value & Financing Decisions", ar: "الاختبار الثاني: EBIT-EPS، قيمة السهم وقرارات التمويل" },
+            questions: [
+                { q: { en: "The two main approaches to determining the optimal capital structure are:", ar: "النهجان الرئيسيان لتحديد هيكل رأس المال الأمثل هما:" }, options: [ { en: "NPV and IRR.", ar: "صافي القيمة الحالية ومعدل العائد الداخلي." }, { en: "EBIT-EPS Approach and Share Value Approach.", ar: "نهج EBIT-EPS ونهج قيمة السهم." }, { en: "Payback Period and Discounted Payback.", ar: "فترة الاسترداد وفترة الاسترداد المخصومة." }, { en: "M&M and CAPM.", ar: "مودigliani-ميلر و CAPM." } ], answer: 1, explanation: { en: "The chapter explicitly lists the EBIT-EPS Approach and the Share Value Approach as the two methods to evaluate capital structure.", ar: "يذكر الفصل صراحة نهج EBIT-EPS ونهج قيمة السهم كطريقتين لتقييم هيكل رأس المال." } },
+                { q: { en: "The EBIT-EPS Indifference Point is defined as:", ar: "تُعرّف نقطة التعادل لـ EBIT-EPS بأنها:" }, options: [ { en: "The EBIT level where EPS is zero.", ar: "مستوى EBIT الذي تكون عنده EPS صفراً." }, { en: "The EBIT level where EPS is the same under two different financing plans.", ar: "مستوى EBIT الذي تكون عنده EPS متساوية تحت خطتي تمويل مختلفتين." }, { en: "The EBIT level where WACC is minimized.", ar: "مستوى EBIT الذي يتم عنده تقليل WACC." }, { en: "The point where Debt equals Equity.", ar: "النقطة التي يساوي فيها الدين حقوق الملكية." } ], answer: 1, explanation: { en: "The indifference point is the EBIT level at which the EPS is identical for two alternative financing plans (e.g., debt vs. equity).", ar: "نقطة اللامبالاة هي مستوى EBIT الذي تكون عنده EPS متطابقة لخطة تمويل بديلة (مثل الدين مقابل حقوق الملكية)." } },
+                { q: { en: "The formula for the EBIT-EPS Indifference Point is:", ar: "صيغة نقطة التعادل لـ EBIT-EPS هي:" }, options: [ { en: "(EBIT - I1)(1-T) / E1 = (EBIT - I2)(1-T) / E2", ar: "(EBIT - I1)(1-T) / E1 = (EBIT - I2)(1-T) / E2" }, { en: "EBIT / E1 = EBIT / E2", ar: "EBIT / E1 = EBIT / E2" }, { en: "(EBIT - I1) / I1 = (EBIT - I2) / I2", ar: "(EBIT - I1) / I1 = (EBIT - I2) / I2" }, { en: "EPS1 = EPS2", ar: "EPS1 = EPS2" } ], answer: 0, explanation: { en: "To find the indifference point, we set the EPS equations of the two plans equal to each other and solve for EBIT.", ar: "لإيجاد نقطة اللامبالاة، نساوي معادلات EPS للخطة ببعضها البعض ونحل المعادلة لإيجاد EBIT." } },
+                { q: { en: "In the EBIT-EPS example, if expected EBIT is GREATER than the indifference point, which plan is preferred?", ar: "في مثال EBIT-EPS، إذا كان EBIT المتوقع أكبر من نقطة التعادل، فأي خطة هي المفضلة؟" }, options: [ { en: "The Equity plan.", ar: "خطة حقوق الملكية." }, { en: "The Debt plan (due to financial leverage).", ar: "خطة الدين (بسبب الرافعة المالية)." }, { en: "Both plans are equally good.", ar: "كلا الخطتين متساويتان في الجودة." }, { en: "Neither plan should be chosen.", ar: "لا يجب اختيار أي خطة." } ], answer: 1, explanation: { en: "Above the indifference point, financial leverage works in favor of the debt plan, yielding a higher EPS.", ar: "فوق نقطة اللامبالاة، تعمل الرافعة المالية لصالح خطة الدين، مما يؤدي إلى EPS أعلى." } },
+                { q: { en: "If expected EBIT is LESS than the indifference point, which plan should be chosen?", ar: "إذا كان EBIT المتوقع أقل من نقطة التعادل، فأي خطة يجب اختيارها؟" }, options: [ { en: "The Debt plan.", ar: "خطة الدين." }, { en: "The Equity plan (to avoid fixed interest burden).", ar: "خطة حقوق الملكية (لتجنب عبء الفائدة الثابت)." }, { en: "The plan with the highest debt.", ar: "الخطة التي تحتوي على أعلى دين." }, { en: "The plan with the highest preference dividends.", ar: "الخطة التي تحتوي على أعلى توزيعات أسهم ممتازة." } ], answer: 1, explanation: { en: "Below the indifference point, the fixed interest burden of debt reduces EPS more than the dilution from issuing new equity.", ar: "أقل من نقطة اللامبالاة، يقلل عبء الفائدة الثابت للدين من EPS أكثر من التخفيف الناتج عن إصدار حقوق ملكية جديدة." } },
+                { q: { en: "In the EBIT-EPS example, Alternative I (Debt) has EBIT=1.5M, Interest=840k, Tax=40%, Shares=800k. What is EPS?", ar: "في مثال EBIT-EPS، البديل الأول (الدين) لديه EBIT=1.5M، الفائدة=840k، الضريبة=40%، الأسهم=800k. ما هي EPS؟" }, options: [ { en: "₹0.651", ar: "0.651 روبية" }, { en: "₹0.495", ar: "0.495 روبية" }, { en: "₹0.305", ar: "0.305 روبية" }, { en: "₹1.000", ar: "1.000 روبية" } ], answer: 1, explanation: { en: "EBT = 1,500,000 - 840,000 = 660,000. Tax = 264,000. PAT = 396,000. EPS = 396,000 / 800,000 = ₹0.495.", ar: "EBT = 1,500,000 - 840,000 = 660,000. الضريبة = 264,000. صافي الربح = 396,000. EPS = 396,000 / 800,000 = 0.495 روبية." } },
+                { q: { en: "In the same example, Alternative III (Equity) has EBIT=1.5M, Interest=360k, Tax=40%, Shares=1,050k. What is EPS?", ar: "في نفس المثال، البديل الثالث (حقوق الملكية) لديه EBIT=1.5M، الفائدة=360k، الضريبة=40%، الأسهم=1,050k. ما هي EPS؟" }, options: [ { en: "₹0.495", ar: "0.495 روبية" }, { en: "₹0.305", ar: "0.305 روبية" }, { en: "₹0.651", ar: "0.651 روبية" }, { en: "₹0.800", ar: "0.800 روبية" } ], answer: 2, explanation: { en: "EBT = 1,500,000 - 360,000 = 1,140,000. Tax = 456,000. PAT = 684,000. EPS = 684,000 / 1,050,000 = ₹0.651.", ar: "EBT = 1,500,000 - 360,000 = 1,140,000. الضريبة = 456,000. صافي الربح = 684,000. EPS = 684,000 / 1,050,000 = 0.651 روبية." } },
+                { q: { en: "The Share Value Approach evaluates capital structure based on:", ar: "يقيّم نهج قيمة السهم هيكل رأس المال بناءً على:" }, options: [ { en: "Maximizing EPS only.", ar: "تعظيم EPS فقط." }, { en: "Maximizing the market price per share (Share Value).", ar: "تعظيم سعر السوق للسهم (قيمة السهم)." }, { en: "Minimizing the cost of debt.", ar: "تقليل تكلفة الدين." }, { en: "Minimizing taxes.", ar: "تقليل الضرائب." } ], answer: 1, explanation: { en: "The Share Value Approach focuses on maximizing the wealth of shareholders by maximizing the share price (P = EPS / r).", ar: "يركز نهج قيمة السهم على تعظيم ثروة المساهمين من خلال تعظيم سعر السهم (P = EPS / r)." } },
+                { q: { en: "The formula for Share Value (Zero Growth Model) is:", ar: "صيغة قيمة السهم (نموذج النمو الصفري) هي:" }, options: [ { en: "P = EPS × r", ar: "P = EPS × r" }, { en: "P = EPS / r", ar: "P = EPS / r" }, { en: "P = r / EPS", ar: "P = r / EPS" }, { en: "P = EPS + r", ar: "P = EPS + r" } ], answer: 1, explanation: { en: "Share Value (P) is calculated by dividing the Expected EPS by the cost of equity (r).", ar: "تُحسب قيمة السهم (P) بقسمة EPS المتوقعة على تكلفة حقوق الملكية (r)." } },
+                { q: { en: "Why does the Share Value Approach consider risk, while the basic EPS approach does not?", ar: "لماذا يأخذ نهج قيمة السهم في الاعتبار المخاطر، بينما لا يفعل نهج EPS الأساسي ذلك؟" }, options: [ { en: "Because EPS ignores taxes.", ar: "لأن EPS يتجاهل الضرائب." }, { en: "Because the cost of equity (r) in the denominator increases as financial risk (debt) increases.", ar: "لأن تكلفة حقوق الملكية (r) في المقام تزداد مع زيادة المخاطر المالية (الدين)." }, { en: "Because Share Value uses historical data.", ar: "لأن قيمة السهم تستخدم بيانات تاريخية." }, { en: "Because EPS is a cash flow metric.", ar: "لأن EPS هو مقياس للتدفق النقدي." } ], answer: 1, explanation: { en: "As debt increases, financial risk increases, causing shareholders to demand a higher return (r). This higher 'r' reduces the share value, offsetting the higher EPS.", ar: "مع زيادة الدين، تزداد المخاطر المالية، مما يجعل المساهمين يطالبون بعائد أعلى (r). هذا 'r' الأعلى يقلل من قيمة السهم، مما يعوض EPS الأعلى." } },
+                { q: { en: "In the Share Value example, at what debt ratio was Expected EPS maximized?", ar: "في مثال قيمة السهم، عند أي نسبة دين تم تعظيم EPS المتوقعة؟" }, options: [ { en: "0%", ar: "0%" }, { en: "30%", ar: "30%" }, { en: "50%", ar: "50%" }, { en: "60%", ar: "60%" } ], answer: 2, explanation: { en: "Based on the EPS calculations in the example, EPS is maximized at a 50% Debt ratio.", ar: "بناءً على حسابات EPS في المثال، يتم تعظيم EPS عند نسبة دين 50%." } },
+                { q: { en: "In the same Share Value example, at what debt ratio was the Maximum Share Value achieved?", ar: "في نفس مثال قيمة السهم، عند أي نسبة دين تم تحقيق أقصى قيمة للسهم؟" }, options: [ { en: "0%", ar: "0%" }, { en: "30%", ar: "30%" }, { en: "50%", ar: "50%" }, { en: "60%", ar: "60%" } ], answer: 1, explanation: { en: "Although EPS was highest at 50% debt, the Share Value was maximized at 30% debt because the risk (cost of equity) became too high at 50%.", ar: "على الرغم من أن EPS كانت الأعلى عند دين 50%، إلا أن قيمة السهم تم تعظيمها عند دين 30% لأن المخاطر (تكلفة حقوق الملكية) أصبحت عالية جداً عند 50%." } },
+                { q: { en: "What is the main conclusion when comparing the EPS Approach and the Share Value Approach?", ar: "ما هو الاستنتاج الرئيسي عند مقارنة نهج EPS ونهج قيمة السهم؟" }, options: [ { en: "Both approaches always yield the exact same optimal debt ratio.", ar: "كلا النهجين يؤديان دائماً إلى نفس نسبة الدين المثلى." }, { en: "The EPS approach ignores risk, while the Share Value approach incorporates risk, often leading to different optimal structures.", ar: "نهج EPS يتجاهل المخاطر، بينما نهج قيمة السهم يدمج المخاطر، مما يؤدي غالباً إلى هياكل مثلى مختلفة." }, { en: "The Share Value approach always recommends 100% debt.", ar: "نهج قيمة السهم يوصي دائماً بـ 100% دين." }, { en: "The EPS approach is theoretically superior.", ar: "نهج EPS متفوق نظرياً." } ], answer: 1, explanation: { en: "The EPS approach might suggest a higher debt level to maximize earnings, but the Share Value approach shows that the increased risk at that debt level destroys shareholder wealth.", ar: "قد يقترح نهج EPS مستوى دين أعلى لتعظيم الأرباح، لكن نهج قيمة السهم يوضح أن المخاطر المتزايدة عند مستوى الدين هذا تدمر ثروة المساهمين." } },
+                { q: { en: "When calculating Expected EPS under the Share Value approach, how is it derived?", ar: "عند حساب EPS المتوقعة تحت نهج قيمة السهم، كيف يتم اشتقاقها؟" }, options: [ { en: "By taking the highest possible EPS.", ar: "عن طريق أخذ أعلى EPS ممكنة." }, { en: "By summing (EPS × Probability) for each sales scenario.", ar: "عن طريق جمع (EPS × الاحتمالية) لكل سيناريو مبيعات." }, { en: "By averaging the EPS of all debt ratios.", ar: "عن طريق متوسط EPS لجميع نسب الدين." }, { en: "By subtracting taxes from EBIT.", ar: "عن طريق طرح الضرائب من EBIT." } ], answer: 1, explanation: { en: "Expected EPS is the probability-weighted average of EPS across different economic scenarios (e.g., pessimistic, most likely, optimistic).", ar: "EPS المتوقعة هي المتوسط المرجح بالاحتمالات لـ EPS عبر السيناريوهات الاقتصادية المختلفة (مثل المتشائم، المرجح، المتفائل)." } },
+                { q: { en: "In the Share Value example, if Sales have probabilities (25% for $400k, 50% for $600k, 25% for $800k), what is the Expected Sales?", ar: "في مثال قيمة السهم، إذا كانت المبيعات لها احتمالات (25% لـ 400k، 50% لـ 600k، 25% لـ 800k)، فما هي المبيعات المتوقعة؟" }, options: [ { en: "$400,000", ar: "400,000 دولار" }, { en: "$500,000", ar: "500,000 دولار" }, { en: "$600,000", ar: "600,000 دولار" }, { en: "$800,000", ar: "800,000 دولار" } ], answer: 2, explanation: { en: "Expected Sales = (0.25 × 400k) + (0.50 × 600k) + (0.25 × 800k) = 100k + 300k + 200k = $600,000.", ar: "المبيعات المتوقعة = (0.25 × 400k) + (0.50 × 600k) + (0.25 × 800k) = 100k + 300k + 200k = 600,000 دولار." } },
+                { q: { en: "If Fixed Costs are $200,000 and Variable Costs are 50% of Sales, what is EBIT when Expected Sales are $600,000?", ar: "إذا كانت التكاليف الثابتة 200,000 دولار والتكاليف المتغيرة 50% من المبيعات، فما هو EBIT عندما تكون المبيعات المتوقعة 600,000 دولار؟" }, options: [ { en: "$100,000", ar: "100,000 دولار" }, { en: "$200,000", ar: "200,000 دولار" }, { en: "$300,000", ar: "300,000 دولار" }, { en: "$400,000", ar: "400,000 دولار" } ], answer: 0, explanation: { en: "EBIT = Sales - Variable Costs - Fixed Costs = 600,000 - (0.50 × 600,000) - 200,000 = 600,000 - 300,000 - 200,000 = $100,000.", ar: "EBIT = المبيعات - التكاليف المتغيرة - التكاليف الثابتة = 600,000 - (0.50 × 600,000) - 200,000 = 600,000 - 300,000 - 200,000 = 100,000 دولار." } },
+                { q: { en: "When evaluating alternative capital structures, what happens to the number of outstanding shares if the firm issues new equity?", ar: "عند تقييم هياكل رأس المال البديلة، ماذا يحدث لعدد الأسهم القائمة إذا أصدرت الشركة حقوق ملكية جديدة؟" }, options: [ { en: "The number of shares decreases.", ar: "عدد الأسهم ينخفض." }, { en: "The number of shares remains the same.", ar: "عدد الأسهم يبقى كما هو." }, { en: "The number of shares increases.", ar: "عدد الأسهم يزداد." }, { en: "The number of shares becomes zero.", ar: "عدد الأسهم يصبح صفراً." } ], answer: 2, explanation: { en: "Issuing new equity shares increases the total number of outstanding shares, which dilutes the EPS.", ar: "إصدار أسهم حقوق ملكية جديدة يزيد من إجمالي عدد الأسهم القائمة، مما يخفف من EPS." } },
+                { q: { en: "Preference dividends are treated how in the EPS calculation?", ar: "كيف تُعامل توزيعات الأسهم الممتازة في حساب EPS؟" }, options: [ { en: "They are added to EBIT.", ar: "تُضاف إلى EBIT." }, { en: "They are treated as an interest expense.", ar: "تُعامل كمصروف فائدة." }, { en: "They are subtracted from Profit After Tax to find Earnings to Equity.", ar: "تُطرح من الربح بعد الضريبة لإيجاد الأرباح لحقوق الملكية." }, { en: "They are ignored completely.", ar: "تُتجاهل تماماً." } ], answer: 2, explanation: { en: "Preference dividends are paid from after-tax profits. EPS = (Profit After Tax - Preference Dividends) / Number of Common Shares.", ar: "تُدفع توزيعات الأسهم الممتازة من أرباح ما بعد الضريبة. EPS = (الربح بعد الضريبة - توزيعات الأسهم الممتازة) / عدد الأسهم العادية." } },
+                { q: { en: "The primary goal of the financial manager regarding capital structure is to:", ar: "الهدف الأساسي للمدير المالي فيما يتعلق بهيكل رأس المال هو:" }, options: [ { en: "Minimize the use of debt completely.", ar: "تقليل استخدام الدين تماماً." }, { en: "Maximize the firm's stock price / shareholder wealth.", ar: "تعظيم سعر سهم الشركة / ثروة المساهمين." }, { en: "Maximize EBIT regardless of risk.", ar: "تعظيم EBIT بغض النظر عن المخاطر." }, { en: "Achieve a 100% equity financing.", ar: "تحقيق تمويل بنسبة 100% حقوق ملكية." } ], answer: 1, explanation: { en: "The ultimate goal of corporate finance is to maximize shareholder wealth, which is achieved by finding the optimal capital structure that maximizes share value.", ar: "الهدف النهائي للتمويل الشركاتي هو تعظيم ثروة المساهمين، والذي يتحقق من خلال إيجاد هيكل رأس المال الأمثل الذي يعظم قيمة السهم." } },
+                { q: { en: "If a firm has existing debt of $3,600,000 at 10%, what is the annual interest expense?", ar: "إذا كان لدى الشركة ديون قائمة بقيمة 3,600,000 دولار بفائدة 10%، فما هو مصروف الفائدة السنوي؟" }, options: [ { en: "$36,000", ar: "36,000 دولار" }, { en: "$360,000", ar: "360,000 دولار" }, { en: "$3,600,000", ar: "3,600,000 دولار" }, { en: "$100,000", ar: "100,000 دولار" } ], answer: 1, explanation: { en: "Interest = Debt × Interest Rate = 3,600,000 × 10% = $360,000.", ar: "الفائدة = الدين × معدل الفائدة = 3,600,000 × 10% = 360,000 دولار." } }
+            ]
+        }
+    ];
+
+    function toggleLanguage(btn) {
+        btn.classList.add('animate');
+        setTimeout(() => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            document.getElementById('main-title').innerText = translations[currentLang].mainTitle;
+            document.getElementById('sub-title').innerText = translations[currentLang].subTitle;
+            document.getElementById('fab-tooltip').innerText = translations[currentLang].fabTooltip;
+            document.getElementById('submit-btn').innerText = translations[currentLang].submitBtn;
+            document.getElementById('footer-text').innerText = translations[currentLang].footer;
+            
+            document.getElementById('tab-0').innerText = currentLang === 'en' ? 'Quiz 1' : 'الاختبار 1';
+            document.getElementById('tab-1').innerText = currentLang === 'en' ? 'Quiz 2' : 'الاختبار 2';
+
+            renderQuiz();
+            setTimeout(() => btn.classList.remove('animate'), 400);
+        }, 300);
+    }
+
+    function switchQuiz(index) {
+        currentQuizIndex = index;
+        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+            btn.classList.toggle('active', i === index);
+        });
+        document.getElementById('result-box').style.display = 'none';
+        renderQuiz();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+        const quiz = quizzes[currentQuizIndex];
+        document.getElementById('quiz-title').innerText = quiz.title[currentLang];
+        
+        const form = document.getElementById('quiz-form');
+        form.innerHTML = '';
+
+        quiz.questions.forEach((q, qIndex) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, oIndex) => {
+                optionsHTML += `
+                    <label class="option-card" id="label-${currentQuizIndex}-${qIndex}-${oIndex}" onclick="selectOption(this)">
+                        <input type="radio" name="q${currentQuizIndex}_${qIndex}" value="${oIndex}">
+                        <div class="custom-radio"></div>
+                        <span class="option-text">${opt[currentLang]}</span>
+                    </label>
+                `;
+            });
+
+            block.innerHTML = `
+                <div class="question-text">
+                    <span class="question-number">${qIndex + 1}</span>
+                    ${q.q[currentLang]}
+                </div>
+                <div class="options">${optionsHTML}</div>
+                <div class="explanation-box" id="exp-${currentQuizIndex}-${qIndex}">
+                    <div class="explanation-header">
+                        <span class="explanation-icon">💡</span>
+                        <span>${translations[currentLang].explainTitle}</span>
+                    </div>
+                    <div class="explanation-text">${q.explanation[currentLang]}</div>
+                </div>
+            `;
+            form.appendChild(block);
+        });
+
+        /* استرجاع الاختيارات المحفوظة بعد تبديل اللغة أو التبويب */
+        quiz.questions.forEach((q, qIndex) => {
+            const key = currentQuizIndex + '-' + qIndex;
+            if (!(key in answers)) return;
+            const oIndex = answers[key];
+            const label = document.getElementById(`label-${currentQuizIndex}-${qIndex}-${oIndex}`);
+            const input = label && label.querySelector('input');
+            if (input) { input.checked = true; label.classList.add('selected'); }
+        });
+        if (graded[currentQuizIndex]) regrade();
+    }
+
+    function selectOption(element) {
+        const parent = element.parentElement;
+        parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+        element.querySelector('input').checked = true;
+        const parts = element.id.split('-');   /* label-Q-Qi-O */
+        answers[parts[1] + '-' + parts[2]] = parseInt(parts[3], 10);
+    }
+
+    function submitQuiz() {
+        graded[currentQuizIndex] = true;
+        gradeAndDisplay(true, true);
+    }
+
+    function regrade() {
+        gradeAndDisplay(false, false);
+    }
+
+    function gradeAndDisplay(track, scroll) {
+        const quiz = quizzes[currentQuizIndex];
+        let score = 0;
+        const total = quiz.questions.length;
+
+        quiz.questions.forEach((q, qIndex) => {
+            const selected = document.querySelector(`input[name="q${currentQuizIndex}_${qIndex}"]:checked`);
+            
+            q.options.forEach((_, oIndex) => {
+                const label = document.getElementById(`label-${currentQuizIndex}-${qIndex}-${oIndex}`);
+                label.classList.remove('correct', 'incorrect', 'selected');
+            });
+
+            document.getElementById(`label-${currentQuizIndex}-${qIndex}-${q.answer}`).classList.add('correct');
+
+            if (selected) {
+                const val = parseInt(selected.value);
+                if (val === q.answer) {
+                    score++;
+                } else {
+                    document.getElementById(`label-${currentQuizIndex}-${qIndex}-${val}`).classList.add('incorrect');
+                }
+            }
+
+            const expBox = document.getElementById(`exp-${currentQuizIndex}-${qIndex}`);
+            setTimeout(() => expBox.classList.add('show'), 100 + (qIndex * 100));
+        });
+
+        const resultBox = document.getElementById('result-box');
+        const scoreDisplay = document.getElementById('score-display');
+        const resultMsg = document.getElementById('result-msg');
+
+        resultBox.style.display = 'block';
+        scoreDisplay.innerText = `${score} / ${total}`;
+        /* 🎯 EBRA score tracking — يرسل المحاولة لجدول Google (عند التسليم فقط) */
+        if (track && window.EBRA && window.EBRA.trackScore) {
+            window.EBRA.trackScore(score, total, "Corporate Capital Structure — Ch1 Quiz " + (currentQuizIndex + 1));
+        }
+        
+        if (score >= total * 0.8) {
+            resultBox.className = 'result-box correct';
+            resultMsg.innerText = translations[currentLang].resultCorrect;
+        } else {
+            resultBox.className = 'result-box incorrect';
+            resultMsg.innerText = translations[currentLang].resultIncorrect;
+        }
+        
+        if (scroll) resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    renderQuiz();
+</script>
+
+</body>
+</html>
